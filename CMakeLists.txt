@@ -22,8 +22,12 @@ qt_standard_project_setup()
 
 file(GLOB_RECURSE ComponentHeader ${CMAKE_CURRENT_SOURCE_DIR}/${ProjectName}/*.h)
 file(GLOB_RECURSE ComponentSources ${CMAKE_CURRENT_SOURCE_DIR}/${ProjectName}/*.cpp)
+file(GLOB_RECURSE ComponentUI ${CMAKE_CURRENT_SOURCE_DIR}/${ProjectName}/*.ui)
 
-qt_add_executable(${ProjectName} ${ComponentHeader} ${ComponentSources})
+qt_add_executable(${ProjectName}
+    ${ComponentHeader}
+    ${ComponentSources}
+    ${ComponentUI})
 
 # internal includes
 target_include_directories(${ProjectName} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

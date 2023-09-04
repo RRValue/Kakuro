@@ -1,8 +1,10 @@
 #include "Application.h"
 
-Application::Application(int& argc, char** argv) : QApplication(argc, argv)
-{
+#include "MainWidget.h"
 
+Application::Application(int& argc, char** argv) : QApplication(argc, argv), m_MainWidget{nullptr}
+{
+    setQuitOnLastWindowClosed(true);
 }
 
 Application::~Application()
@@ -12,5 +14,6 @@ Application::~Application()
 
 void Application::onRun()
 {
-    exit(0);
+    m_MainWidget = new MainWidget();
+    m_MainWidget->show();
 }

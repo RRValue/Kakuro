@@ -2,6 +2,8 @@
 
 #include <QtWidgets/QApplication>
 
+class MainWidget;
+
 class Application : public QApplication
 {
     Q_OBJECT
@@ -12,4 +14,7 @@ public:
 
 public slots:
     void onRun();
+
+private:
+    MainWidget* m_MainWidget;
 };
