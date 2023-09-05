@@ -19,22 +19,20 @@ ValuetSet getPossibleValuesForSum(const Value& summ, const unsigned int& cellCou
     auto values = ValueVector(9);
     std::iota(std::begin(values), std::end(values), 1);
 
-    auto perm = std::vector<Value>(9, Value(0));
+    auto perm = ValueVector(9, Value(0));
     std::fill_n(std::begin(perm), cellCount, Value(1));
 
     auto result = ValuetSet();
 
     do
     {
-        auto perm_value = std::vector<Value>(9, Value(0));
+        auto perm_value = ValueVector(9, Value(0));
         for(unsigned int i = 0; i < 9; i++)
             perm_value[i] = values[i] * perm[i];
 
-        perm_value.erase(std::remove(std::begin(perm_value), std::end(perm_value), 0), std::end(perm_value));
+        std::erase(perm_value, 0);
 
-        const auto perm_result = std::accumulate(std::begin(perm_value), std::end(perm_value), 0);
-
-        if(perm_result == summ)
+        if(std::accumulate(std::cbegin(perm_value), std::cend(perm_value), 0) == summ)
             result.insert(std::cbegin(perm_value), std::cend(perm_value));
 
     } while(std::prev_permutation(std::begin(perm), std::end(perm)));
