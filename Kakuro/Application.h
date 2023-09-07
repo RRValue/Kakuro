@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Puzzle.h"
+
 #include <QtWidgets/QApplication>
 
 class MainWidget;
@@ -17,4 +19,5 @@ public slots:
 
 private:
     MainWidget* m_MainWidget;
+    Puzzle m_Puzzle = {};
 };
