@@ -15,7 +15,6 @@ struct Puzzle
 
     void reset() noexcept;
 
-    Point m_Origin = {};
     Size m_Size = {};
     Lines m_Lines = {};
 };
