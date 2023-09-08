@@ -5,6 +5,7 @@
 
 #include <algorithm>
 #include <iterator>
+#include <numeric>
 
 void Puzzle::addLine(const InputLine& line) noexcept
 {
@@ -76,5 +77,24 @@ void Puzzle::setup() noexcept
             cell->m_Lines.insert(line.get());
             origin += step;
         }
+    }
+
+    auto values = ValueVector(sm_NumDigits);
+    std::iota(std::begin(values), std::end(values), sm_MinDigit);
+    const auto value_set = ValuetSet(std::cbegin(values), std::cend(values));
+
+    for(const auto& cell : m_Board)
+        cell->m_Values = value_set;
+}
+
+void Puzzle::solve() noexcept
+{
+    // reduce
+    for(const auto& line : m_Lines)
+    {
+        const auto valid_values = line->getValidValues();
+
+        for(const auto& line_cell : line->m_Cells)
+            line_cell->reduce(valid_values);
     }
 }

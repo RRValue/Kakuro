@@ -18,6 +18,7 @@ class Puzzle
 public:
     void addLine(const InputLine& line) noexcept;
     void init() noexcept;
+    void solve() noexcept;
     void reset() noexcept;
 
 private:

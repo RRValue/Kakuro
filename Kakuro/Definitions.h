@@ -11,6 +11,6 @@ using Value = unsigned int;
 using ValuetSet = std::set<Value>;
 using ValueVector = std::vector<Value>;
 
-static Value sm_MinDigit = Value(1);
-static Value sm_MaxDigit = Value(9);
-static Index sm_NumDigits = Index(sm_MaxDigit) - Index(sm_MinDigit) + Index(1);
+static const Value sm_MinDigit = Value(1);
+static const Value sm_MaxDigit = Value(9);
+static const Index sm_NumDigits = Index(sm_MaxDigit) - Index(sm_MinDigit) + Index(1);
