@@ -13,7 +13,7 @@ void Puzzle::addLine(const InputLine& line) noexcept
 
 void Puzzle::init() noexcept
 {
-    m_Size = calculateSize();
+    calculateSize();
     create();
     setup();
 }
@@ -26,34 +26,12 @@ void Puzzle::reset() noexcept
     m_Board = {};
 }
 
-Size Puzzle::calculateSize() const noexcept
+void Puzzle::calculateSize() noexcept
 {
-    Size size = {};
+    m_Size = {};
 
     for(const auto& line : m_InputLines)
-    {
-        // every line must have length > 0
-        if(line.m_Length == 0)
-            continue;
-
-        const auto extend = [&line]() -> Size {
-            switch(line.m_Orientation)
-            {
-                case Orientation::Horinzontal:
-                    return {line.m_Origin.x + line.m_Length,  //
-                            line.m_Origin.y + 1};
-                case Orientation::Vertical:
-                    return {line.m_Origin.x + 1,  //
-                            line.m_Origin.y + line.m_Length};
-                default: return {};
-            }
-        }();
-
-        size.width = std::max(size.width, extend.width);
-        size.height = std::max(size.height, extend.height);
-    }
-
-    return size;
+        m_Size.extend(line.extend());
 }
 
 void Puzzle::create() noexcept

@@ -21,7 +21,7 @@ public:
     void reset() noexcept;
 
 private:
-    Size calculateSize() const noexcept;
+    void calculateSize() noexcept;
     void create() noexcept;
     void setup() noexcept;
 
