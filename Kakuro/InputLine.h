@@ -1,12 +1,10 @@
 #pragma once
 
-#include "CoordianateSystem.h"
+#include "Point.h"
 #include "Orientation.h"
 
 struct InputLine
 {
-    ValuetSet getValidValues() const noexcept;
-
     Value m_Sum = 0;
     Point m_Origin = {};
     Length m_Length = 0;
