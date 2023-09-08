@@ -1,13 +1,13 @@
 #include "Puzzle.h"
 
-void Puzzle::addLine(const Line& line) noexcept
+void Puzzle::addLine(const InputLine& line) noexcept
 {
-    m_Lines.push_back(line);
+    m_InputLines.push_back(line);
 }
 
 void Puzzle::init() noexcept
 {
-    for (const auto& line : m_Lines)
+    for(const auto& line : m_InputLines)
     {
         // every line must have length > 0
         if(line.m_Length == 0)
@@ -16,10 +16,10 @@ void Puzzle::init() noexcept
         const auto extend = [&line]() -> Size {
             switch(line.m_Orientation)
             {
-                case Line::Orientation::Horinzontal:
+                case Orientation::Horinzontal:
                     return {line.m_Origin.x + line.m_Length,  //
                             line.m_Origin.y + 1};
-                case Line::Orientation::Vertical:
+                case Orientation::Vertical:
                     return {line.m_Origin.x + 1,  //
                             line.m_Origin.y + line.m_Length};
                 default: return {};
@@ -34,5 +34,5 @@ void Puzzle::init() noexcept
 void Puzzle::reset() noexcept
 {
     m_Size = {};
-    m_Lines = {};
+    m_InputLines = {};
 }

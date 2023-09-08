@@ -1,9 +1,9 @@
-#include "Line.h"
+#include "InputLine.h"
 
 #include <algorithm>
 #include <numeric>
 
-ValuetSet Line::getValidValues() const noexcept
+ValuetSet InputLine::getValidValues() const noexcept
 {
     if(m_Length == 0 || m_Length > sm_NumDigits)
         return {};

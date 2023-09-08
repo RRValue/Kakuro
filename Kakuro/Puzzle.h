@@ -1,20 +1,20 @@
 #pragma once
 
 #include "CoordianateSystem.h"
-#include "Line.h"
+#include "InputLine.h"
 
 #include <vector>
 
 struct Puzzle
 {
-    using Lines = std::vector<Line>;
+    using InputLines = std::vector<InputLine>;
 
-    void addLine(const Line& line) noexcept;
+    void addLine(const InputLine& line) noexcept;
 
     void init() noexcept;
 
     void reset() noexcept;
 
     Size m_Size = {};
-    Lines m_Lines = {};
+    InputLines m_InputLines = {};
 };
