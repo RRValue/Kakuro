@@ -12,3 +12,8 @@ void Cell::reduce(const ValuetSet& other) noexcept
 
     m_Values = result;
 }
+
+void Cell::reduce(const Value& other) noexcept
+{
+    m_Values.erase(other);
+}

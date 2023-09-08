@@ -19,6 +19,7 @@ void Application::onRun()
     m_Puzzle.addLine({14, {0, 0}, 2, Orientation::Vertical});
     m_Puzzle.addLine({9, {1, 0}, 2, Orientation::Vertical});
     m_Puzzle.init();
+    m_Puzzle.solve();
 
     m_MainWidget = new MainWidget();
     m_MainWidget->show();

@@ -8,4 +8,5 @@ struct Point
     CoordianteValue y = 0;
 
     void operator+=(const Point& other) noexcept;
+    bool operator==(const Point& other) const noexcept;
 };
