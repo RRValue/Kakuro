@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <iterator>
 #include <numeric>
+#include <deque>
 
 void Puzzle::addLine(const InputLine& line) noexcept
 {
@@ -90,15 +91,29 @@ void Puzzle::solve() noexcept
             line_cell->reduce(valid_values);
     }
 
-    // test for singularity
-    for(Index i = 0; i < m_Size.width * m_Size.height; i++)
+    struct BoardCell
+    {
+        Cell* m_Cell;
+        Point m_Pos;
+    };
+
+    auto candidates = std::deque<BoardCell>();
+
+    for (Index i = 0; i < m_Size.width * m_Size.height; i++)
     {
         const auto pos = Point{i % m_Size.width, i / m_Size.height};
         const auto cell = m_Board[i];
 
-        // update lines of cell
         if(!cell->solved())
             continue;
+
+        candidates.push_back({cell.get(), pos});
+    }
+
+    while(!candidates.empty())
+    {
+        const auto [cell, pos] = candidates.back();
+        candidates.pop_back();
 
         const auto cell_solution = cell->solution();
 
