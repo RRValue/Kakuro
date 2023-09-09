@@ -34,15 +34,22 @@ ValuetSet Line::getValidValues() const noexcept
     return result;
 }
 
-void Line::reduce(const Value& value, const Point& position) const noexcept
+Line::CellSet Line::reduce(const Value& value, const Point& position) const noexcept
 {
-    auto line_pos = m_Origin;
+    auto solved_cells = CellSet();
 
-    for(Index j = 0; j < m_Length; j++)
+    for(const auto cell : m_Cells)
     {
-        if(line_pos != position)
-            m_Cells[j]->reduce(value);
+        if(cell->m_Position == position || cell->solved())
+            continue;
 
-        line_pos += m_Direction;
+        cell->reduce(value);
+
+        if(!cell->solved())
+            continue;
+            
+        solved_cells.insert(cell);
     }
+
+    return solved_cells;
 }

@@ -111,7 +111,14 @@ void Puzzle::solve() noexcept
 
         const auto cell_solution = cell->solution();
 
+        auto new_candidates = std::set<Cell*>();
+
         for(const auto line : cell->m_Lines)
-            line->reduce(cell_solution, cell->m_Position);
+        {
+            const auto line_candidates = line->reduce(cell_solution, cell->m_Position);
+            new_candidates.insert(std::cbegin(line_candidates), std::cend(line_candidates));
+        }
+
+        candidates.insert(std::end(candidates), std::cbegin(new_candidates), std::cend(new_candidates));
     }
 }
