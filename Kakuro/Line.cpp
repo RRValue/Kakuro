@@ -34,7 +34,7 @@ ValuetSet Line::getValidValues() const noexcept
     return result;
 }
 
-void Line::reduceOnPos(const Value& value, const Point& position) const noexcept
+void Line::reduce(const Value& value, const Point& position) const noexcept
 {
     auto line_pos = m_Origin;
 

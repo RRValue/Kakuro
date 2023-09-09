@@ -118,6 +118,6 @@ void Puzzle::solve() noexcept
         const auto cell_solution = cell->solution();
 
         for(const auto line : cell->m_Lines)
-            line->reduceOnPos(cell_solution, pos);
+            line->reduce(cell_solution, pos);
     }
 }
