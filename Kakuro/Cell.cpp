@@ -17,3 +17,13 @@ void Cell::reduce(const Value& other) noexcept
 {
     m_Values.erase(other);
 }
+
+bool Cell::solved() const noexcept
+{
+    return m_Values.size() != 1;
+}
+
+Value Cell::solution() const noexcept
+{
+    return *m_Values.begin();
+}

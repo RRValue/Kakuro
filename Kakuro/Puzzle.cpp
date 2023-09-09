@@ -60,14 +60,7 @@ void Puzzle::setup() noexcept
         line->m_Cells.resize(line->m_Length);
 
         auto line_pos = line->m_Origin;
-        auto step = [](const auto& orientation) {
-            switch(orientation)
-            {
-                case Orientation::Horinzontal: return Point{1, 0};
-                case Orientation::Vertical: return Point{0, 1};
-                default: return Point(0, 0);
-            }
-        }(line->m_Orientation);
+        auto direction = getDirection(line->m_Orientation);
 
         for(Index i = 0; i < line->m_Length; i++)
         {
@@ -75,7 +68,7 @@ void Puzzle::setup() noexcept
 
             line->m_Cells[i] = cell;
             cell->m_Lines.insert(line.get());
-            line_pos += step;
+            line_pos += direction;
         }
     }
 
@@ -105,29 +98,22 @@ void Puzzle::solve() noexcept
         const auto cell = m_Board[i];
 
         // update lines of cell
-        if(cell->m_Values.size() != 1)
+        if(!cell->solved())
             continue;
 
-        const auto single_value = *cell->m_Values.begin();
+        const auto cell_solution =cell->solution();
 
         for(const auto line : cell->m_Lines)
         {
             auto line_pos = line->m_Origin;
-            auto step = [](const auto& orientation) {
-                switch(orientation)
-                {
-                    case Orientation::Horinzontal: return Point{1, 0};
-                    case Orientation::Vertical: return Point{0, 1};
-                    default: return Point(0, 0);
-                }
-            }(line->m_Orientation);
+            auto direction = getDirection(line->m_Orientation);
 
             for(Index j = 0; j < line->m_Length; j++)
             {
                 if(line_pos != pos)
-                    line->m_Cells[j]->reduce(single_value);
+                    line->m_Cells[j]->reduce(cell_solution);
                 
-                line_pos += step;
+                line_pos += direction;
             }
         }
     }
