@@ -1,5 +1,7 @@
 #include "Line.h"
 
+#include "Cell.h"
+
 #include <algorithm>
 #include <numeric>
 
@@ -30,4 +32,17 @@ ValuetSet Line::getValidValues() const noexcept
     } while(std::prev_permutation(std::begin(perm), std::end(perm)));
 
     return result;
+}
+
+void Line::reduceOnPos(const Value& value, const Point& position) const noexcept
+{
+    auto line_pos = m_Origin;
+
+    for(Index j = 0; j < m_Length; j++)
+    {
+        if(line_pos != position)
+            m_Cells[j]->reduce(value);
+
+        line_pos += m_Direction;
+    }
 }

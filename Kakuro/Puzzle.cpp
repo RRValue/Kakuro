@@ -103,16 +103,6 @@ void Puzzle::solve() noexcept
         const auto cell_solution = cell->solution();
 
         for(const auto line : cell->m_Lines)
-        {
-            auto line_pos = line->m_Origin;
-
-            for(Index j = 0; j < line->m_Length; j++)
-            {
-                if(line_pos != pos)
-                    line->m_Cells[j]->reduce(cell_solution);
-
-                line_pos += line->m_Direction;
-            }
-        }
+            line->reduceOnPos(cell_solution, pos);
     }
 }
