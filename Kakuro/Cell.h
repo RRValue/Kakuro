@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Definitions.h"
+#include "Point.h"
 
 struct Line;
 
@@ -15,4 +16,5 @@ struct Cell
 
     ValuetSet m_Values = {};
     Lines m_Lines = {};
+    Point m_Position = {};
 };

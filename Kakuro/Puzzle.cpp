@@ -41,8 +41,11 @@ void Puzzle::create() noexcept
     // create board
     m_Board = Board(m_Size.width * m_Size.height);
 
-    for(auto& cell : m_Board)
-        cell = std::make_shared<Cell>();
+    for (Index i = 0; i < m_Size.width * m_Size.height; i++)
+    {
+        m_Board[i] = std::make_shared<Cell>();
+        m_Board[i]->m_Position = Point{i % m_Size.width, i / m_Size.height};
+    }
 
     // create lines
     m_Lines = {};
@@ -91,33 +94,24 @@ void Puzzle::solve() noexcept
             line_cell->reduce(valid_values);
     }
 
-    struct BoardCell
+    auto candidates = std::deque<Cell*>();
+
+    for(const auto& cell : m_Board)
     {
-        Cell* m_Cell;
-        Point m_Pos;
-    };
-
-    auto candidates = std::deque<BoardCell>();
-
-    for (Index i = 0; i < m_Size.width * m_Size.height; i++)
-    {
-        const auto pos = Point{i % m_Size.width, i / m_Size.height};
-        const auto cell = m_Board[i];
-
         if(!cell->solved())
             continue;
 
-        candidates.push_back({cell.get(), pos});
+        candidates.push_back(cell.get());
     }
 
     while(!candidates.empty())
     {
-        const auto [cell, pos] = candidates.back();
+        const auto cell = candidates.back();
         candidates.pop_back();
 
         const auto cell_solution = cell->solution();
 
         for(const auto line : cell->m_Lines)
-            line->reduce(cell_solution, pos);
+            line->reduce(cell_solution, cell->m_Position);
     }
 }
