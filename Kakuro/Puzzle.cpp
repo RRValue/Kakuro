@@ -60,7 +60,6 @@ void Puzzle::setup() noexcept
         line->m_Cells.resize(line->m_Length);
 
         auto line_pos = line->m_Origin;
-        auto direction = getDirection(line->m_Orientation);
 
         for(Index i = 0; i < line->m_Length; i++)
         {
@@ -68,7 +67,7 @@ void Puzzle::setup() noexcept
 
             line->m_Cells[i] = cell;
             cell->m_Lines.insert(line.get());
-            line_pos += direction;
+            line_pos += line->m_Direction;
         }
     }
 
@@ -101,19 +100,18 @@ void Puzzle::solve() noexcept
         if(!cell->solved())
             continue;
 
-        const auto cell_solution =cell->solution();
+        const auto cell_solution = cell->solution();
 
         for(const auto line : cell->m_Lines)
         {
             auto line_pos = line->m_Origin;
-            auto direction = getDirection(line->m_Orientation);
 
             for(Index j = 0; j < line->m_Length; j++)
             {
                 if(line_pos != pos)
                     line->m_Cells[j]->reduce(cell_solution);
-                
-                line_pos += direction;
+
+                line_pos += line->m_Direction;
             }
         }
     }

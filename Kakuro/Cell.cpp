@@ -20,7 +20,7 @@ void Cell::reduce(const Value& other) noexcept
 
 bool Cell::solved() const noexcept
 {
-    return m_Values.size() != 1;
+    return m_Values.size() == 1;
 }
 
 Value Cell::solution() const noexcept
