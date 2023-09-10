@@ -8,7 +8,7 @@ using Index = size_t;
 using Length = size_t;
 
 using Value = unsigned int;
-using ValuetSet = std::set<Value>;
+using ValueSet = std::set<Value>;
 using ValueVector = std::vector<Value>;
 
 static const Value sm_MinDigit = Value(1);

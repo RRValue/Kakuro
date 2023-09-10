@@ -3,9 +3,9 @@
 #include <algorithm>
 #include <iterator>
 
-void Cell::reduce(const ValuetSet& other) noexcept
+void Cell::reduce(const ValueSet& other) noexcept
 {
-    ValuetSet result;
+    ValueSet result;
     std::set_intersection(std::cbegin(m_Values), std::cend(m_Values),  //
                           std::cbegin(other), std::cend(other),        //
                           std::inserter(result, std::end(result)));

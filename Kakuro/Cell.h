@@ -9,12 +9,12 @@ struct Cell
 {
     using Lines = std::set<Line*>;
 
-    void reduce(const ValuetSet& other) noexcept;
+    void reduce(const ValueSet& other) noexcept;
     void reduce(const Value& other) noexcept;
     bool solved() const noexcept;
     Value solution() const noexcept;
 
-    ValuetSet m_Values = {};
+    ValueSet m_Values = {};
     Lines m_Lines = {};
     Point m_Position = {};
 };

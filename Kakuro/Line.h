@@ -10,7 +10,7 @@ struct Line : InputLine
     using Cells = std::vector<Cell*>;
     using CellSet = std::set<Cell*>;
 
-    ValuetSet getValidValues() const noexcept;
+    ValueSet getValidValues() const noexcept;
     CellSet reduce(const Value& value, const Point& position) const noexcept;
 
     Cells m_Cells;

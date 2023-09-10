@@ -77,7 +77,7 @@ void Puzzle::setup() noexcept
 
     auto values = ValueVector(sm_NumDigits);
     std::iota(std::begin(values), std::end(values), sm_MinDigit);
-    const auto value_set = ValuetSet(std::cbegin(values), std::cend(values));
+    const auto value_set = ValueSet(std::cbegin(values), std::cend(values));
 
     for(const auto& cell : m_Board)
         cell->m_Values = value_set;

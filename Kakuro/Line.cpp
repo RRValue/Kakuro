@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <numeric>
 
-ValuetSet Line::getValidValues() const noexcept
+ValueSet Line::getValidValues() const noexcept
 {
     if(m_Length == 0 || m_Length > sm_NumDigits)
         return {};
@@ -16,7 +16,7 @@ ValuetSet Line::getValidValues() const noexcept
     auto perm = ValueVector(sm_NumDigits, Value(0));
     std::fill_n(std::begin(perm), m_Length, Value(1));
 
-    auto result = ValuetSet();
+    auto result = ValueSet();
 
     do
     {
