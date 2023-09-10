@@ -7,14 +7,19 @@
 
 ValueSet Line::getValidValues() const noexcept
 {
-    if(m_Length == 0 || m_Length > sm_NumDigits)
+    return getValidValues(m_Length, m_Sum);
+}
+
+ValueSet Line::getValidValues(const Length& length, const Value& sum) const noexcept
+{
+    if(length == 0 || length > sm_NumDigits)
         return {};
 
     auto values = ValueVector(sm_NumDigits);
     std::iota(std::begin(values), std::end(values), sm_MinDigit);
 
     auto perm = ValueVector(sm_NumDigits, Value(0));
-    std::fill_n(std::begin(perm), m_Length, Value(1));
+    std::fill_n(std::begin(perm), length, Value(1));
 
     auto result = ValueSet();
 
@@ -26,7 +31,7 @@ ValueSet Line::getValidValues() const noexcept
 
         std::erase(perm_value, 0);
 
-        if(std::accumulate(std::cbegin(perm_value), std::cend(perm_value), Value(0)) == m_Sum)
+        if(std::accumulate(std::cbegin(perm_value), std::cend(perm_value), Value(0)) == sum)
             result.insert(std::cbegin(perm_value), std::cend(perm_value));
 
     } while(std::prev_permutation(std::begin(perm), std::end(perm)));
@@ -34,7 +39,7 @@ ValueSet Line::getValidValues() const noexcept
     return result;
 }
 
-Line::CellSet Line::reduce(const Value& value, const Point& position) const noexcept
+Line::CellSet Line::reduceCells(const Value& value, const Point& position) const noexcept
 {
     auto solved_cells = CellSet();
 

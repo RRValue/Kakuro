@@ -11,7 +11,8 @@ struct Line : InputLine
     using CellSet = std::set<Cell*>;
 
     ValueSet getValidValues() const noexcept;
-    CellSet reduce(const Value& value, const Point& position) const noexcept;
+    ValueSet getValidValues(const Length& length, const Value& sum) const noexcept;
+    CellSet reduceCells(const Value& value, const Point& position) const noexcept;
 
     Cells m_Cells;
 };
