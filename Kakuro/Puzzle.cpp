@@ -85,7 +85,7 @@ void Puzzle::setup() noexcept
 
 void Puzzle::solve() noexcept
 {
-    // reduce
+    // reduce on sum
     for(const auto& line : m_Lines)
     {
         const auto valid_values = line->getValidValues();
@@ -94,6 +94,7 @@ void Puzzle::solve() noexcept
             line_cell->reduce(valid_values);
     }
 
+    // find solved cells
     auto candidates = std::deque<Cell*>();
 
     for(const auto& cell : m_Board)
@@ -104,24 +105,13 @@ void Puzzle::solve() noexcept
         candidates.push_back(cell.get());
     }
 
+    // reduce on solved cells & process newly solved cells
     while(!candidates.empty())
     {
         const auto cell = candidates.back();
         candidates.pop_back();
 
-        const auto cell_solution = cell->solution();
-
-        auto new_candidates = std::set<Cell*>();
-
-        for(const auto line : cell->m_Lines)
-        {
-            auto line_candidates = line->reduceCells(cell_solution, cell->m_Position);
-            new_candidates.insert(std::cbegin(line_candidates), std::cend(line_candidates));
-
-            line_candidates = line->reduceValues();
-            new_candidates.insert(std::cbegin(line_candidates), std::cend(line_candidates));
-        }
-
+        const auto new_candidates = cell->reduce();
         candidates.insert(std::end(candidates), std::cbegin(new_candidates), std::cend(new_candidates));
     }
 }
