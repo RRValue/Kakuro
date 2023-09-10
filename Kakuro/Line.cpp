@@ -58,3 +58,39 @@ Line::CellSet Line::reduceCells(const Value& value, const Point& position) const
 
     return solved_cells;
 }
+
+Line::CellSet Line::reduceValues() const noexcept
+{
+    auto length = m_Length;
+    auto sum = m_Sum;
+
+    for(const auto cell : m_Cells)
+    {
+        if(!cell->solved())
+            continue;
+
+        length--;
+        sum -= cell->solution();
+    }
+
+    if(length == m_Length)
+        return {};
+
+    auto solved_cells = CellSet();
+    const auto values = getValidValues(length, sum);
+
+    for(const auto cell : m_Cells)
+    {
+        if(cell->solved())
+            continue;
+
+        cell->reduce(values);
+
+        if(!cell->solved())
+            continue;
+
+        solved_cells.insert(cell);
+    }
+
+    return solved_cells;
+}

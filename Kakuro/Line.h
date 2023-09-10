@@ -12,7 +12,9 @@ struct Line : InputLine
 
     ValueSet getValidValues() const noexcept;
     ValueSet getValidValues(const Length& length, const Value& sum) const noexcept;
+    
     CellSet reduceCells(const Value& value, const Point& position) const noexcept;
+    CellSet reduceValues() const noexcept;
 
     Cells m_Cells;
 };
