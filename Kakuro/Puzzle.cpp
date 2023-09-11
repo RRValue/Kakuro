@@ -2,6 +2,7 @@
 
 #include "Cell.h"
 #include "Line.h"
+#include "Label.h"
 
 #include <algorithm>
 #include <iterator>
@@ -25,6 +26,7 @@ void Puzzle::reset() noexcept
     m_Size = {};
     m_InputLines = {};
     m_Lines = {};
+    m_Labels = {};
     m_Board = {};
 }
 
@@ -54,6 +56,40 @@ void Puzzle::create() noexcept
     std::transform(std::cbegin(m_InputLines), std::cend(m_InputLines),  //
                    std::back_inserter(m_Lines),                         //
                    [](const auto& inputLine) { return std::make_shared<Line>(inputLine); });
+
+    // create labels
+    auto labels_grid_size = (m_Size.width + 1) * (m_Size.height + 1);
+    m_Labels = {};
+    m_Labels.reserve(labels_grid_size);
+    std::generate_n(std::back_inserter(m_Labels), labels_grid_size, []() { return std::make_shared<Label>(); });
+
+    for(const auto& line : m_InputLines)
+    {
+        const auto& position = [&line]() {
+            switch(line.m_Orientation)
+            {
+                case Orientation::Horinzontal: return line.m_Origin + Point(0, 1);
+                case Orientation::Vertical: return line.m_Origin + Point(1, 0);
+                default: return Point(0, 0);
+            }
+        }();
+
+        const auto label = m_Labels[position.x + position.y * (m_Size.width + 1)];
+        label->m_Type |= line.m_Orientation;
+
+        switch(line.m_Orientation)
+        {
+            case Orientation::Horinzontal: {
+                label->m_LabelH = line.m_Sum;
+                break;
+            }
+            case Orientation::Vertical: {
+                label->m_LabelV = line.m_Sum;
+                break;
+            }
+            default: break;
+        }
+    }
 }
 
 void Puzzle::setup() noexcept
@@ -114,4 +150,9 @@ void Puzzle::solve() noexcept
         const auto new_candidates = cell->reduce();
         candidates.insert(std::end(candidates), std::cbegin(new_candidates), std::cend(new_candidates));
     }
+}
+
+const Size& Puzzle::getSize() const noexcept
+{
+    return m_Size;
 }

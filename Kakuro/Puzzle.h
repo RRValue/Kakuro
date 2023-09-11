@@ -7,12 +7,14 @@
 #include <memory>
 
 struct Line;
+struct Label;
 struct Cell;
 
 class Puzzle
 {
     using InputLines = std::vector<InputLine>;
     using Lines = std::vector<std::shared_ptr<Line>>;
+    using Labels = std::vector<std::shared_ptr<Label>>;
     using Board = std::vector<std::shared_ptr<Cell>>;
 
 public:
@@ -20,6 +22,8 @@ public:
     void init() noexcept;
     void solve() noexcept;
     void reset() noexcept;
+
+    const Size& getSize() const noexcept;
 
 private:
     void calculateSize() noexcept;
@@ -31,5 +35,6 @@ private:
     InputLines m_InputLines = {};
     
     Lines m_Lines;
+    Labels m_Labels;
     Board m_Board;
 };
