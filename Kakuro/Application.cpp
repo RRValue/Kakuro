@@ -16,10 +16,16 @@ Application::~Application()
 
 void Application::onRun()
 {
-    m_Puzzle->addLine({17, {0, 1}, 2, Orientation::Horinzontal});
-    m_Puzzle->addLine({6, {0, 2}, 2, Orientation::Horinzontal});
-    m_Puzzle->addLine({14, {1, 0}, 2, Orientation::Vertical});
-    m_Puzzle->addLine({9, {2, 0}, 2, Orientation::Vertical});
+    m_Puzzle->addLine({9, {2, 1}, 2, Orientation::Horinzontal});
+    m_Puzzle->addLine({20, {0, 2}, 4, Orientation::Horinzontal});
+    m_Puzzle->addLine({23, {0, 3}, 4, Orientation::Horinzontal});
+    m_Puzzle->addLine({8, {0, 4}, 2, Orientation::Horinzontal});
+
+    m_Puzzle->addLine({23, {1, 1}, 3, Orientation::Vertical});
+    m_Puzzle->addLine({7, {2, 1}, 3, Orientation::Vertical});
+    m_Puzzle->addLine({7, {3, 0}, 3, Orientation::Vertical});
+    m_Puzzle->addLine({23, {4, 0}, 3, Orientation::Vertical});
+
     m_Puzzle->init();
     m_Puzzle->solve();
 
