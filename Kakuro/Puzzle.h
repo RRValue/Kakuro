@@ -13,9 +13,14 @@ struct Cell;
 class Puzzle
 {
     using InputLines = std::vector<InputLine>;
-    using Lines = std::vector<std::shared_ptr<Line>>;
-    using Labels = std::vector<std::shared_ptr<Label>>;
-    using Board = std::vector<std::shared_ptr<Cell>>;
+    
+    using LinePtr = std::shared_ptr<Line>;
+    using LabelPtr = std::shared_ptr<Label>;
+    using CellPtr = std::shared_ptr<Cell>;
+    
+    using Lines = std::vector<LinePtr>;
+    using Labels = std::vector<LabelPtr>;
+    using Board = std::vector<CellPtr>;
 
 public:
     void addLine(const InputLine& line) noexcept;
@@ -24,6 +29,9 @@ public:
     void reset() noexcept;
 
     const Size& getSize() const noexcept;
+
+    LabelPtr getLabel(const Index& x, const Index& y) const noexcept;
+    CellPtr getCell(const Index& x, const Index& y) const noexcept;
 
 private:
     void calculateSize() noexcept;

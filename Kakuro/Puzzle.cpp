@@ -167,3 +167,17 @@ const Size& Puzzle::getSize() const noexcept
 {
     return m_Size;
 }
+
+Puzzle::LabelPtr Puzzle::getLabel(const Index& x, const Index& y) const noexcept
+{
+    const auto index = x + y * m_Size.width;
+
+    return index < m_Labels.size() ? m_Labels[index] : LabelPtr{};
+}
+
+Puzzle::CellPtr Puzzle::getCell(const Index& x, const Index& y) const noexcept
+{
+    const auto index = x + y * m_Size.width;
+
+    return index < m_Board.size() ? m_Board[index] : CellPtr{};
+}

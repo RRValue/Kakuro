@@ -1,6 +1,9 @@
 #include "PuzzleModel.h"
 
+#include "Cell.h"
+#include "Label.h"
 #include "Puzzle.h"
+#include "PuzzleItemData.h"
 
 #include <QtCore/QSize>
 
@@ -27,11 +30,29 @@ int PuzzleModel::columnCount(const QModelIndex& parent) const
 
 QVariant PuzzleModel::data(const QModelIndex& index, int role) const
 {
-    // todo
     if(!index.isValid() || role != Qt::DisplayRole)
         return {};
 
-    return {};
+    const auto label = m_Puzzle->getLabel(index.column(), index.row());
+    const auto cell = m_Puzzle->getCell(index.column(), index.row());
+
+    auto result = PuzzleItemData{};
+
+    if(label)
+    {
+        result.m_Type = PuzzleItemData::Type::Label;
+        result.m_LabelH = label->m_LabelH;
+        result.m_LabelV = label->m_LabelV;
+    }
+    else if(cell)
+    {
+        result.m_Type = PuzzleItemData::Type::Cell;
+
+        if(cell->solved())
+            result.m_Solution = cell->solution();
+    }
+
+    return QVariant::fromValue(result);
 }
 
 QVariant PuzzleModel::headerData(int section, Qt::Orientation orientation, int role) const

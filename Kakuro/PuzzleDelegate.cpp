@@ -1,5 +1,7 @@
 #include "PuzzleDelegate.h"
 
+#include "PuzzleItemData.h"
+
 #include <QtGui/QPainter>
 
 PuzzleDelegate::PuzzleDelegate(QObject* parent) : QAbstractItemDelegate(parent), m_CellSize(20)
@@ -12,8 +14,21 @@ void PuzzleDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
         painter->fillRect(option.rect, option.palette.highlight());
 
     const int size = qMin(option.rect.width(), option.rect.height());
-    const int brightness = index.model()->data(index, Qt::DisplayRole).toInt();
-    const double radius = (size / 2.0) - (brightness / 255.0 * size / 2.0);
+
+    const auto item_data = index.model()->data(index, Qt::DisplayRole).value<PuzzleItemData>();
+
+    const auto color = [&item_data]() -> QColor {
+        switch(item_data.m_Type)
+        {
+            case(PuzzleItemData::Type::None): return Qt::GlobalColor::red;
+            case(PuzzleItemData::Type::Label): return Qt::GlobalColor::green;
+            case(PuzzleItemData::Type::Cell): return Qt::GlobalColor::blue;
+        }
+
+        return {};
+    }();
+
+    const double radius = size / 2.0;
     if(qFuzzyIsNull(radius))
         return;
 
@@ -22,9 +37,9 @@ void PuzzleDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
     painter->setPen(Qt::NoPen);
 
     if(option.state & QStyle::State_Selected)
-        painter->setBrush(option.palette.highlightedText());
+        painter->setBrush(color.darker());
     else
-        painter->setBrush(option.palette.text());
+        painter->setBrush(color);
 
     painter->drawEllipse(
         QRectF(option.rect.x() + option.rect.width() / 2 - radius, option.rect.y() + option.rect.height() / 2 - radius, 2 * radius, 2 * radius));
