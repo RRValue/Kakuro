@@ -17,12 +17,12 @@ void PuzzleModel::setPuzzle(const PuzzlePtr& puzzle)
 
 int PuzzleModel::rowCount(const QModelIndex& parent) const
 {
-    return m_Puzzle->getSize().height + 1;
+    return m_Puzzle->getSize().height;
 }
 
 int PuzzleModel::columnCount(const QModelIndex& parent) const
 {
-    return m_Puzzle->getSize().width + 1;
+    return m_Puzzle->getSize().width;
 }
 
 QVariant PuzzleModel::data(const QModelIndex& index, int role) const
