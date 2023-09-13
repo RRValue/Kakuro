@@ -43,6 +43,7 @@ QVariant PuzzleModel::data(const QModelIndex& index, int role) const
         result.m_Type = PuzzleItemData::Type::Label;
         result.m_LabelH = label->m_LabelH;
         result.m_LabelV = label->m_LabelV;
+        result.m_Orientation = label->m_Type;
     }
     else if(cell)
     {
