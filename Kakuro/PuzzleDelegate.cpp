@@ -44,7 +44,7 @@ void PuzzleDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
                 painter->setBrush(Qt::GlobalColor::black);
                 painter->drawText(text_rect, Qt::AlignRight | Qt::AlignTop, QString::number(item_data.m_LabelH));
             }
-            else if(orientation.testFlag(Orientation::Vertical))
+            if(orientation.testFlag(Orientation::Vertical))
             {
                 painter->setBrush(Qt::GlobalColor::black);
                 painter->drawText(text_rect, Qt::AlignLeft | Qt::AlignBottom, QString::number(item_data.m_LabelV));
@@ -60,26 +60,38 @@ void PuzzleDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
             const auto num_values = values.size();
             auto text = QString("");
 
-            auto num_first_row = std::min(3, num_values);
-            for (Index i = 0; i < 3 && i < num_values; i++)
+            auto num_values_row = std::min(size_t(3), num_values);
+            for(Index i = 0; i < num_values_row; i++)
             {
                 text.append(QString::number(values[i]));
+                if(i != num_values_row - 1)
+                    text.append(" ");
             }
 
-            if (num_values > 3)
+            if(num_values > 3)
             {
                 text.append("\n");
-                
+
+                num_values_row = std::min(size_t(6), num_values);
                 for(Index i = 3; i < 6 && i < num_values; i++)
+                {
                     text.append(QString::number(values[i]));
+                    if(i != num_values_row - 1)
+                        text.append(" ");
+                }
             }
 
             if(num_values > 6)
             {
                 text.append("\n");
 
+                num_values_row = std::min(size_t(9), num_values);
                 for(Index i = 6; i < num_values; i++)
+                {
                     text.append(QString::number(values[i]));
+                    if(i != num_values_row - 1)
+                        text.append(" ");
+                }
             }
 
             painter->setBrush(Qt::GlobalColor::black);
