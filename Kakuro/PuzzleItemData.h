@@ -17,7 +17,7 @@ struct PuzzleItemData
     using Solution = std::optional<Value>;
 
     Type m_Type = Type::None;
-    Solution m_Solution = 0;
+    ValueVector m_Values = {};
     Value m_LabelH = 0;
     Value m_LabelV = 0;
     Orientations m_Orientation = Orientation::None;

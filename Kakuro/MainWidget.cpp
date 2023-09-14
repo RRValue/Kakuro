@@ -11,7 +11,7 @@ MainWidget::MainWidget(const PuzzlePtr& puzzle, QWidget* parent) :
     m_PuzzleModel->setPuzzle(puzzle);
 
     m_UI->setupUi(this);
-    m_UI->m_PuzzleView->setShowGrid(false);
+    m_UI->m_PuzzleView->setShowGrid(true);
     m_UI->m_PuzzleView->horizontalHeader()->hide();
     m_UI->m_PuzzleView->verticalHeader()->hide();
     m_UI->m_PuzzleView->horizontalHeader()->setMinimumSectionSize(1);

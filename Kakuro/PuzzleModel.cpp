@@ -48,9 +48,7 @@ QVariant PuzzleModel::data(const QModelIndex& index, int role) const
     else if(cell)
     {
         result.m_Type = PuzzleItemData::Type::Cell;
-
-        if(cell->solved())
-            result.m_Solution = cell->solution();
+        result.m_Values = ValueVector(std::cbegin(cell->m_Values), std::cend(cell->m_Values));
     }
 
     return QVariant::fromValue(result);
