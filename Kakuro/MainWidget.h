@@ -18,6 +18,9 @@ public:
     MainWidget(const PuzzlePtr& puzzle, QWidget* parent = nullptr);
     ~MainWidget();
 
+signals:
+    void reqSolve();
+
 private:
     Ui_MainWidget* m_UI;
     PuzzleModel* m_PuzzleModel;

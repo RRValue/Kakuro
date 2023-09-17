@@ -21,9 +21,13 @@ MainWidget::MainWidget(const PuzzlePtr& puzzle, QWidget* parent) :
 
     m_UI->m_PuzzleView->resizeColumnsToContents();
     m_UI->m_PuzzleView->resizeRowsToContents();
+
+    connect(m_UI->m_SolveBtn, &QPushButton::clicked, this, &MainWidget::reqSolve);
 }
 
 MainWidget::~MainWidget()
 {
+    delete m_PuzzleModel;
+    delete m_PuzzleDelegate;
     delete m_UI;
 }

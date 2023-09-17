@@ -19,6 +19,9 @@ public:
 public slots:
     void onRun();
 
+private slots:
+    void onSolve();
+
 private:
     MainWidget* m_MainWidget;
     PuzzlePtr m_Puzzle = {};

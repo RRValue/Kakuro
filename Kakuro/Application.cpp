@@ -27,8 +27,16 @@ void Application::onRun()
     m_Puzzle->addLine({23, {4, 0}, 3, Orientation::Vertical});
 
     m_Puzzle->init();
-    m_Puzzle->solve();
 
     m_MainWidget = new MainWidget(m_Puzzle);
+    
+    connect(m_MainWidget, &MainWidget::reqSolve, this, &Application::onSolve);
+
     m_MainWidget->show();
+}
+
+void Application::onSolve()
+{
+    m_Puzzle->solve();
+    m_MainWidget->update();
 }
