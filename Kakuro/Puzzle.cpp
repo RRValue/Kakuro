@@ -1,7 +1,6 @@
 #include "Puzzle.h"
 
 #include "Cell.h"
-#include "CellSumTest.h"
 #include "Label.h"
 #include "Line.h"
 
@@ -133,22 +132,6 @@ void Puzzle::setup() noexcept
 
 void Puzzle::solve() noexcept
 {
-    // test data
-    const auto s0 = ValueSet{8, 9};
-    const auto s1 = ValueSet{1, 4};
-    const auto s2 = ValueSet{2, 4};
-    const auto s3 = ValueSet{6, 9};
-
-    const auto tester_0 = CellSumTest({&s0, &s1, &s2, &s3}, 0, 23);
-    const auto tester_1 = CellSumTest({&s0, &s1, &s2, &s3}, 1, 23);
-    const auto tester_2 = CellSumTest({&s0, &s1, &s2, &s3}, 2, 23);
-    const auto tester_3 = CellSumTest({&s0, &s1, &s2, &s3}, 3, 23);
-    
-    const auto rejected_values_0 = tester_0.test();
-    const auto rejected_values_1 = tester_1.test();
-    const auto rejected_values_2 = tester_2.test();
-    const auto rejected_values_3 = tester_3.test();
-
     // reduce on sum
     for(const auto& line : m_Lines)
     {
@@ -177,6 +160,18 @@ void Puzzle::solve() noexcept
 
         const auto new_candidates = cell->reduce();
         candidates.insert(std::end(candidates), std::cbegin(new_candidates), std::cend(new_candidates));
+
+        if(!candidates.empty())
+            continue;
+
+        for(const auto& line : m_Lines)
+        {
+            if(line->solved())
+                continue;
+
+            const auto new_candidates = line->reduceByTest();
+            candidates.insert(std::end(candidates), std::cbegin(new_candidates), std::cend(new_candidates));
+        }
     }
 }
 

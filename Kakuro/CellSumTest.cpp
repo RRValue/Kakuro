@@ -26,7 +26,7 @@ Index CellSumTest::getCombinationSize(const ValueSets& valueSets, const Index& s
 
 ValueSet CellSumTest::test() const noexcept
 {
-    auto result = ValueSet();
+    auto rejected = ValueSet();
 
     for(const auto& value : *m_ValuesSets[m_Set])
     {
@@ -44,11 +44,18 @@ ValueSet CellSumTest::test() const noexcept
                             return m_Sum == std::accumulate(std::cbegin(combination), std::cend(combination), Value(0));
                         }))
         {
-            result.insert(value);
+            rejected.insert(value);
         }
     }
 
-    return result;
+    const auto& old_values = *m_ValuesSets[m_Set];
+    auto new_values = ValueSet();
+
+    std::set_difference(std::cbegin(old_values), std::cend(old_values),  //
+                        std::cbegin(rejected), std::cend(rejected),      //
+                        std::inserter(new_values, std::end(new_values)));
+
+    return new_values;
 }
 
 void CellSumTest::build(const Index& i, const Index& set, ValueSet& usedValues, ValueVector& combination, ValueVectors& combinations) const noexcept

@@ -1,10 +1,18 @@
 #include "Line.h"
 
 #include "Cell.h"
+#include "CellSumTest.h"
 
 #include <algorithm>
 #include <numeric>
 #include <iterator>
+
+bool Line::solved() const noexcept
+{
+    return std::all_of(std::cbegin(m_Cells), std::cend(m_Cells), [](const auto& cell) {  //
+        return cell->solved();
+    });
+}
 
 ValueSet Line::getValidValues() const noexcept
 {
@@ -107,4 +115,24 @@ Line::CellSet Line::reduceValues() const noexcept
     }
 
     return solved_cells;
+}
+
+Line::CellSet Line::reduceByTest() const noexcept
+{
+    auto result = CellSet();
+
+    auto cell_sets = CellSumTest::ValueSets(m_Cells.size());
+
+    for(Index i = 0; i < m_Cells.size(); i++)
+        cell_sets[i] = &m_Cells[i]->m_Values;
+
+    for(Index i = 0; i < m_Cells.size(); i++)
+    {
+        m_Cells[i]->reduce(CellSumTest(cell_sets, i, m_Sum).test());
+        
+        if(m_Cells[i]->solved())
+            result.insert(m_Cells[i]);
+    }
+
+    return result;
 }

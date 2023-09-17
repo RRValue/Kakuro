@@ -4,6 +4,7 @@
 
 class CellSumTest
 {
+public:
     using ValueSets = std::vector<ValueSet const*>;
     using ValueVectors = std::vector<ValueVector>;
 
