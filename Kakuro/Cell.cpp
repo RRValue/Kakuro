@@ -25,6 +25,9 @@ Cell::CellSet Cell::reduce() noexcept
 
     for(const auto line : m_Lines)
     {
+        if(line->solved())
+            continue;
+
         auto solved_line_cells = line->reduce(cell_solution, m_Position);
         solved_cells.insert(std::cbegin(solved_line_cells), std::cend(solved_line_cells));
     }
