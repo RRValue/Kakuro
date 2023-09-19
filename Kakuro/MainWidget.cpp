@@ -31,3 +31,8 @@ MainWidget::~MainWidget()
     delete m_PuzzleDelegate;
     delete m_UI;
 }
+
+void MainWidget::updateView() noexcept
+{
+    m_PuzzleModel->dataChanged();
+}

@@ -18,6 +18,8 @@ public:
     MainWidget(const PuzzlePtr& puzzle, QWidget* parent = nullptr);
     ~MainWidget();
 
+    void updateView() noexcept;
+
 signals:
     void reqSolve();
 

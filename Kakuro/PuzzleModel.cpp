@@ -60,3 +60,9 @@ QVariant PuzzleModel::headerData(int section, Qt::Orientation orientation, int r
         return QSize(1, 1);
     return {};
 }
+
+void PuzzleModel::dataChanged() noexcept
+{
+    beginResetModel();
+    endResetModel();
+}

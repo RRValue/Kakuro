@@ -22,6 +22,8 @@ public:
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
+    void dataChanged() noexcept;
+
 private:
     PuzzlePtr m_Puzzle;
 };

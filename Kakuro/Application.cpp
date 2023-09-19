@@ -51,5 +51,5 @@ void Application::onRun()
 void Application::onSolve()
 {
     m_Puzzle->solve();
-    m_MainWidget->update();
+    m_MainWidget->updateView();
 }
