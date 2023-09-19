@@ -15,16 +15,16 @@ private:
     using PuzzlePtr = std::shared_ptr<Puzzle>;
 
 public:
-    MainWidget(const PuzzlePtr& puzzle, QWidget* parent = nullptr);
+    MainWidget(QWidget* parent = nullptr);
     ~MainWidget();
 
-    void updateView() noexcept;
-
-signals:
-    void reqSolve();
+private slots:
+    void onSolve();
+    void onLoad();
 
 private:
     Ui_MainWidget* m_UI;
+    PuzzlePtr m_Puzzle;
     PuzzleModel* m_PuzzleModel;
     PuzzleDelegate* m_PuzzleDelegate;
 };

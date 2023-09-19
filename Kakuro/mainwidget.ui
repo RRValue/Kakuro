@@ -27,6 +27,13 @@
     <widget class="QWidget" name="widget" native="true">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <widget class="QPushButton" name="m_LoadBtn">
+        <property name="text">
+         <string notr="true">Load</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="m_SolveBtn">
         <property name="text">
          <string notr="true">Solve</string>
