@@ -54,6 +54,13 @@ add_custom_command(
             --plugindir plugins 
             --no-translations 
             --compiler-runtime 
+			--no-system-d3d-compiler 
+			--no-opengl-sw 
+			--no-pdf 
+			--no-opengl 
+			--no-svg 
+			--no-network 
+			--verbose 1 
 			$<$<CONFIG:Debug>:--pdb>$<$<CONFIG:Release>:>
     )
 
