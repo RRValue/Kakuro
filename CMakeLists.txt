@@ -54,7 +54,7 @@ add_custom_command(
             --plugindir plugins 
             --no-translations 
             --compiler-runtime 
-            --pdb
+			$<$<CONFIG:Debug>:--pdb>$<$<CONFIG:Release>:>
     )
 
 qt_finalize_project()
