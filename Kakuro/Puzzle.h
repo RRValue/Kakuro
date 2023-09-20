@@ -12,8 +12,10 @@ struct Cell;
 
 class Puzzle
 {
+public:
     using InputLines = std::vector<InputLine>;
     
+private:
     using LinePtr = std::shared_ptr<Line>;
     using LabelPtr = std::shared_ptr<Label>;
     using CellPtr = std::shared_ptr<Cell>;
